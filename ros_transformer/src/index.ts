@@ -17,17 +17,21 @@ export default class ComponentRosTransformer {
       Resources: {},
       Outputs: {},
     };
-    const refs = newInputs.props.ref;
+    const refs = newInputs.props.ref as Array<any>;
     delete newInputs.props.ref;
+    if (refs.length == 0) {
+      logger.info('empty refs, no need create/update ros stack');
+      return {};
+    }
     refs.forEach((item) => {
-      logger.debug('item ====>', item);
+      // logger.debug('item ====>', item);
       rosTemplate.Resources[item.resourceId] = item.resourceTemplate;
     });
     logger.debug('rosTemplate ====>', JSON.stringify(rosTemplate));
     newInputs.props.template = rosTemplate;
     logger.debug('newInputs ====>', JSON.stringify(newInputs));
 
-    const componentInst: any = await loadComponent(`ros`);
+    const componentInst: any = await loadComponent(`ros@dev`);
     return await componentInst['deploy'](newInputs);
   }
 

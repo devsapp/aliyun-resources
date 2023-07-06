@@ -4,16 +4,24 @@ access: xiliu #  秘钥别名
 
 services:
   xl-test-bucket-001:
-    component: aliyun_oss_bucket
+    component: aliyun_oss_bucket@dev
     props:
       bucket: xl-test-bucket-001
       acl: private
 
   xl-test-bucket-003:
-    component: aliyun_oss_bucket
+    component: aliyun_oss_bucket@dev
     props:
       bucket: xl-test-bucket-003
       acl: private
+  
+  xl-test-instance-002:
+    component: aliyun_ots_instance@dev
+    props:
+      name: xl-inst-321
+      accessed_by: Any
+      description: "xiliu test instance"
+      instance_type: Capacity
 
   ros-transformer-test: #  服务名称
     component: ${path(../)}
@@ -24,3 +32,4 @@ services:
       ref:
         - ${xl-test-bucket-001.output}
         - ${xl-test-bucket-003.output}
+        - ${xl-test-instance-002.output}

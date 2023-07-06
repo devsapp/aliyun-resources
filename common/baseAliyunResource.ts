@@ -26,6 +26,10 @@ export class BaseAliyunResource {
     return {};
   }
 
+  protected getRosValueMap(): object {
+    return {};
+  }
+
   protected getRosInitTemplateResource(): any {
     return {
       Type: '',
@@ -48,7 +52,11 @@ export class BaseAliyunResource {
       if (Object.prototype.toString.call(value) === '[object Object]') {
         ret[newKey] = this.paramMapping(value);
       } else {
-        ret[newKey] = value;
+        if (value in this.getRosValueMap()) {
+          ret[newKey] = this.getRosValueMap()[value];
+        } else {
+          ret[newKey] = value;
+        }
       }
     }
     return ret;
