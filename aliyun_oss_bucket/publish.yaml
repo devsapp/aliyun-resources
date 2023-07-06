@@ -1,0 +1,58 @@
+Type: Component
+Name: aliyun_oss_bucket
+Provider:
+  - 阿里云 # 取值内容参考：www.devsapp.cn/provider_list.html
+Version: dev
+Description: 通过阿里云 ROS 部署阿里云资源
+HomePage: https://github.com/devsapp/aliyun-resources/aliyun-oss-bucket
+Tags:
+  - ROS
+  - IAC
+Category: 基础云服务 # 取值内容参考：www.devsapp.cn/category_list.html
+Service: # 使用的服务
+  资源编排: # 取值内容参考：www.devsapp.cn/service_list.html
+    Authorities: #权限描述
+      - 资源编排全部权限 # 所需要的权限
+Commands: # 指令，格式为指令：指令描述，例如：
+  deploy: 根据 ROS oss bucket 获取对应的参数
+  remove: 空命令
+Properties:
+  bucket:
+    type: string
+    required: true
+    description: Bucket 名称
+
+  acl:
+    type: string
+    required: false
+    description: 读写权限
+    default: private
+    enum:
+      - private
+      - public-read
+      - public-read-write
+
+  storage_class:
+    type: string
+    required: false
+    description: 存储类型
+    default: Standard
+    enum:
+      - Standard
+      - IA
+      - Archive
+      - ColdArchive
+
+  redundancy_type:
+    type: string
+    required: false
+    description: 存储冗余类型
+    default: LRS
+    enum:
+      - LRS
+      - ZRS
+
+  versioning:
+    type: object
+    required: false
+    description: 版本控制

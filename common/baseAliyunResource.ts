@@ -1,87 +1,67 @@
-
-export interface ICredentials {
-  AccountID?: string;
-  AccessKeyID?: string;
-  AccessKeySecret?: string;
-  SecurityToken?: string;
-  SecretID?: string;
-  SecretKey?: string;
-  SecretAccessKey?: string;
-  KeyVaultName?: string;
-  TenantID?: string;
-  ClientID?: string;
-  ClientSecret?: string;
-  PrivateKeyData?: string
-}
-
-export interface InputProps {
-  props: any; // 用户自定义输入
-  credentials: ICredentials; // 用户秘钥
-  appName: string; // 
-  project: {
-    component: string; // 组件名（支持本地绝对路径）
-    access: string; // 访问秘钥名
-    projectName: string; // 项目名
-  };
-  command: string; // 执行指令
-  args: string; // 命令行 扩展参数
-  argsObj: any;
-  path: {
-    configPath: string // 配置路径
-  }
-}
-
-
+import { InputProps } from './interface';
 export class BaseAliyunResource {
   _inputs: InputProps;
-  _engine: string
   constructor(input: InputProps) {
     this._inputs = input;
-    this._engine = this._inputs.props?.engine || 'ros';
-    if ('engine' in this._inputs.props) {
-      delete this._inputs.props['engine'];
-    }
   }
 
   protected getProps(): any {
     return this._inputs.props;
   }
 
-  protected getEngine(): string {
-    return this._engine
+  protected getProject(): any {
+    return this._inputs.project;
+  }
+
+  protected getProjectName(): any {
+    return this.getProject().projectName;
   }
 
   protected getAccountID(): string {
-    const credentials = this._inputs.credentials
+    const credentials = this._inputs.credentials;
     return credentials.AccountID as string;
   }
 
   protected getRosParamMap(): object {
-    return {}
+    return {};
   }
 
-  protected getRosInitTemplate(): any {
-    return {}
-  }
-
-  public async deploy(): Promise<object> {
-    if (this.getEngine() !== 'ros') {
-      throw new Error(`UnSupported Engine: ${this.getEngine()}`);
-    }
-    let ret = {
-      "resource": this.getRosInitTemplate()
+  protected getRosInitTemplateResource(): any {
+    return {
+      Type: '',
+      Properties: {},
     };
-    const props = this.getProps();
+  }
+
+  protected paramMapping(props: object): object {
     let paramMap = this.getRosParamMap();
+    let ret = {};
 
     for (let key in props) {
       if (!(key in paramMap)) {
-        console.error(`${key} not in ${paramMap}`)
+        console.error(`${key} not in ${paramMap}`);
         continue;
       }
-      console.debug(key + ': ' + paramMap[key]);
-      ret.resource.Properties[paramMap[key]] = props[key];
+      const newKey = paramMap[key];
+      console.debug(key + ': ' + newKey);
+      let value = props[key];
+      if (Object.prototype.toString.call(value) === '[object Object]') {
+        ret[newKey] = this.paramMapping(value);
+      } else {
+        ret[newKey] = value;
+      }
     }
+    return ret;
+  }
+
+  public async deploy(): Promise<object> {
+    let ret = {
+      resourceTemplate: this.getRosInitTemplateResource(),
+      resourceId: this.getProjectName(),
+    };
+
+    const props = this.getProps();
+    ret.resourceTemplate.Properties = this.paramMapping(props);
     return ret;
   }
 }

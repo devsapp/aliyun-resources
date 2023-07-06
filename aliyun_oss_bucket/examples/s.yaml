@@ -1,0 +1,14 @@
+edition: 2.0.0 
+name: rosApp 
+access: xiliu 
+
+services:
+  xl-bucket: 
+    component: ${path(../)}
+    props:
+      bucket: xl-test-bucket
+      acl: private
+      storage_class: Standard
+      redundancy_type: ZRS
+      versioning:
+        status: Enabled
