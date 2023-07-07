@@ -37,6 +37,14 @@ export class BaseAliyunResource {
     };
   }
 
+  protected isObject(value: any) {
+    return Object.prototype.toString.call(value) === '[object Object]';
+  }
+
+  protected isArray(value: any) {
+    return Object.prototype.toString.call(value) === '[object Array]';
+  }
+
   protected paramMapping(props: object): object {
     let paramMap = this.getRosParamMap();
     let ret = {};
@@ -49,8 +57,14 @@ export class BaseAliyunResource {
       const newKey = paramMap[key];
       console.debug(key + ': ' + newKey);
       let value = props[key];
-      if (Object.prototype.toString.call(value) === '[object Object]') {
+      if (this.isObject(value)) {
         ret[newKey] = this.paramMapping(value);
+      } else if (this.isArray(value)) {
+        let newV = new Array<object>();
+        for (const o of value) {
+          newV.push(this.paramMapping(o));
+        }
+        ret[newKey] = newV;
       } else {
         if (value in this.getRosValueMap()) {
           ret[newKey] = this.getRosValueMap()[value];
@@ -68,7 +82,14 @@ export class BaseAliyunResource {
       resourceId: this.getProjectName(),
     };
 
-    const props = this.getProps();
+    let props = this.getProps();
+    const depends_on = props.depends_on as Array<string>;
+    if (depends_on !== undefined) {
+      delete props.depends_on;
+      if (depends_on.length > 0) {
+        ret.resourceTemplate.DependsOn = depends_on;
+      }
+    }
     ret.resourceTemplate.Properties = this.paramMapping(props);
     return ret;
   }

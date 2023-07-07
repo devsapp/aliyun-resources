@@ -1,0 +1,18 @@
+edition: 1.0.0 #  命令行YAML规范版本，遵循语义化版本（Semantic Versioning）规范
+name: rosApp #  项目名称
+access: xiliu #  秘钥别名
+
+services:
+  ros-test: #  服务名称
+    component: ${path(../)}
+    props:
+      depends_on: 
+        - xl-test-instance-002
+      instance_name: test-inst
+      table_name: app-table
+      primary_key:
+        - type: String
+          name: id
+      time_to_live: -1
+      max_version: 2
+      deviation_cell_version_in_sec: 43200
