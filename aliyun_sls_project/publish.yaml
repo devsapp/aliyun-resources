@@ -1,5 +1,5 @@
 Type: Component
-Name: aliyun_ots_table
+Name: aliyun_sls_project
 Provider:
   - 阿里云 # 取值内容参考：www.devsapp.cn/provider_list.html
 Version: dev
@@ -14,37 +14,15 @@ Service: # 使用的服务
     Authorities: #权限描述
       - 资源编排全部权限 # 所需要的权限
 Commands: # 指令，格式为指令：指令描述，例如：
-  deploy: 根据 ROS ots instance 获取对应的参数
+  deploy: 根据 ROS sls project 获取对应的参数
   remove: 空命令
-
 Properties:
-  instance_name:
+  name:
     type: string
     required: true
-    description: table Name
+    description: sls project 名称
 
-  table_name:
+  description:
     type: string
-    required: true
-    description: table Name
-
-  primary_key:
-    type: object
-    required: true
-    description: table 主键
-
-  time_to_live:
-    type: number
     required: false
-    default: -1
-
-  max_version:
-    type: number
-    required: false
-    default: 1
-
-  deviation_cell_version_in_sec:
-    type: number
-    required: false
-    default: 86400
-
+    description: sls project 描述

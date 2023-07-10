@@ -1,0 +1,17 @@
+edition: 1.0.0 #  命令行YAML规范版本，遵循语义化版本（Semantic Versioning）规范
+name: rosApp #  项目名称
+access: xiliu #  秘钥别名
+
+services:
+  ros-test: #  服务名称
+    component: ${path(../)}
+    props:
+      project: xl-test-project
+      name: xl-test-logs
+      retention_period: 15
+      shard_count: 1
+      auto_split: true
+      max_split_shard_count: 12
+      enable_web_tracking: false
+      append_meta: false
+      

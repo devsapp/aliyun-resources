@@ -37,6 +37,26 @@ services:
       max_version: 1
       deviation_cell_version_in_sec: 86400
 
+  xl-test-log-project-001: 
+    component: aliyun_sls_project@dev
+    props:
+      name: xl-test-project
+      description: "xiliu test log project"
+
+  xl-test-log-store-001: 
+    component: aliyun_sls_logstore@dev
+    props:
+      depends_on: 
+        - xl-test-log-project-001
+      project: xl-test-project
+      name: xl-test-logs
+      retention_period: 15
+      shard_count: 1
+      auto_split: true
+      max_split_shard_count: 12
+      enable_web_tracking: false
+      append_meta: false
+
   ros-transformer-test: #  服务名称
     component: ${path(../)}
     props:
@@ -48,3 +68,5 @@ services:
         - ${xl-test-bucket-003.output}
         - ${xl-test-instance-002.output}
         - ${xl-test-table-001.output}
+        - ${xl-test-log-project-001.output}
+        - ${xl-test-log-store-001.output}
