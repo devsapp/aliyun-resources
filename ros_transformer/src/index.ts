@@ -17,8 +17,8 @@ export default class ComponentRosTransformer {
       Resources: {},
       Outputs: {},
     };
-    const refs = newInputs.props.ref as Array<any>;
-    delete newInputs.props.ref;
+    const refs = newInputs.props.refs as Array<any>;
+    delete newInputs.props.refs;
     if (refs.length == 0) {
       logger.info('empty refs, no need create/update ros stack');
       return {};
@@ -37,6 +37,7 @@ export default class ComponentRosTransformer {
 
   public async remove(inputs: InputProps) {
     logger.debug(`remove ==> input: ${JSON.stringify(inputs.props)}`);
-    return {};
+    const componentInst: any = await loadComponent(`ros@dev`);
+    return await componentInst['remove'](inputs);
   }
 }

@@ -63,7 +63,7 @@ services:
       region: cn-hangzhou
       name: xl-stack-transformer
       endpoint: ros.aliyuncs.com # 海外是 ros-intl.aliyuncs.com， 默认是国内
-      ref:
+      refs:
         - ${xl-test-bucket-001.output}
         - ${xl-test-bucket-003.output}
         - ${xl-test-instance-002.output}
