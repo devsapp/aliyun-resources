@@ -1,7 +1,8 @@
-import { InputProps } from './interface';
-export class BaseAliyunResource {
-  _inputs: InputProps;
-  constructor(input: InputProps) {
+import { IInputs } from '@serverless-devs/component-interface';
+
+class BaseAliyunResource {
+  protected _inputs: IInputs;
+  constructor(input: IInputs) {
     this._inputs = input;
   }
 
@@ -10,16 +11,16 @@ export class BaseAliyunResource {
   }
 
   protected getProject(): any {
-    return this._inputs.project;
+    return this._inputs.resource;
   }
 
   protected getProjectName(): any {
-    return this.getProject().projectName;
+    return this.getProject().name;
   }
 
-  protected getAccountID(): string {
-    const credentials = this._inputs.credentials;
-    return credentials.AccountID as string;
+  protected async getAccountID(): Promise<string> {
+    const credential = await this._inputs.getCredential();
+    return credential.AccountID as string;
   }
 
   protected getRosParamMap(): object {
@@ -46,16 +47,17 @@ export class BaseAliyunResource {
   }
 
   protected paramMapping(props: object): object {
+    const logger = GLogger.getLogger();
     let paramMap = this.getRosParamMap();
     let ret = {};
 
     for (let key in props) {
       if (!(key in paramMap)) {
-        console.error(`${key} not in ${paramMap}`);
+        logger.error(`${key} not in ${paramMap}`);
         continue;
       }
       const newKey = paramMap[key];
-      console.debug(key + ': ' + newKey);
+      logger.debug(`key map ==>  ${key} : ${newKey}`);
       let value = props[key];
       if (this.isObject(value)) {
         ret[newKey] = this.paramMapping(value);
@@ -67,7 +69,9 @@ export class BaseAliyunResource {
         ret[newKey] = newV;
       } else {
         if (value in this.getRosValueMap()) {
-          ret[newKey] = this.getRosValueMap()[value];
+          const newV = this.getRosValueMap()[value];
+          logger.debug(`value map ==>  ${value} : ${newV}`);
+          ret[newKey] = newV;
         } else {
           ret[newKey] = value;
         }
@@ -77,6 +81,7 @@ export class BaseAliyunResource {
   }
 
   public async deploy(): Promise<object> {
+    const logger = GLogger.getLogger();
     let ret = {
       resourceTemplate: this.getRosInitTemplateResource(),
       resourceId: this.getProjectName(),
@@ -91,6 +96,25 @@ export class BaseAliyunResource {
       }
     }
     ret.resourceTemplate.Properties = this.paramMapping(props);
+    logger.debug(`deploy result:\n${JSON.stringify(ret)}`);
     return ret;
   }
 }
+
+class GLogger {
+  private static instance: any;
+  private constructor() {}
+
+  static getLogger(): any {
+    if (!GLogger.instance) {
+      throw new Error('instance must be init before call getLogger');
+    }
+    return GLogger.instance;
+  }
+
+  static setLogger(logger: any) {
+    GLogger.instance = logger;
+  }
+}
+
+export { BaseAliyunResource, GLogger };

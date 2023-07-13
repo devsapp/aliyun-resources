@@ -1,4 +1,4 @@
-import { BaseAliyunResource } from '../common/baseAliyunResource';
+import { BaseAliyunResource } from 'base_aliyun_resource';
 
 export class OSSBucket extends BaseAliyunResource {
   protected getRosParamMap(): object {

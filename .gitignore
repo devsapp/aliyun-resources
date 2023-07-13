@@ -1,3 +1,5 @@
 .vscode
 .s
 aliyun_serverless_connector
+node_modules
+lib

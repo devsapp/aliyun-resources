@@ -1,4 +1,4 @@
-import { BaseAliyunResource } from '../common/baseAliyunResource';
+import { BaseAliyunResource } from 'base_aliyun_resource';
 
 export class OTSInstance extends BaseAliyunResource {
   /* Cluster type, the default is SSD. 

@@ -7,7 +7,7 @@
   "author": "Serverless-Devs",
   "contributors": [],
   "license": "MIT",
-  "main": "./dist/index.js",
+  "main": "dist/index.js",
   "publishConfig": {
     "access": "public"
   },
@@ -22,15 +22,17 @@
     "start": "npm run watch",
     "watch": "tsc -w",
     "format": "prettier --write src/",
-    "prebuild": "rimraf dist && npm run format && rimraf node_modules && rimraf package-lock.json && npm i",
+    "prebuild": "rimraf dist && npm run format && rimraf node_modules && npm i && npm link base_aliyun_resource",
     "build": "esbuild src/index.ts --bundle --log-level=error --minify --platform=node --format=cjs --target=node10.4 --outfile=dist/index.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@serverless-devs/component-interface": "^0.0.2"
+  },
   "devDependencies": {
     "@types/node": "^14.0.23",
     "esbuild": "^0.13.8",
-    "rimraf": "^3.0.2",
     "prettier": "^2.8.4",
+    "rimraf": "^3.0.2",
     "ts-node": "^8.10.2",
     "typescript": "^4.4.2"
   }
