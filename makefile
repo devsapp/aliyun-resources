@@ -49,4 +49,4 @@ format-all:
 	cd aliyun_sls_logstore && npm run format && cd -
 
 statistics:
-	@./statistics.sh
+	@wget -q https://images.devsapp.cn/tools/git-statistics.sh && bash git-statistics.sh && rm git-statistics.sh
