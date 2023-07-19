@@ -3,3 +3,6 @@
 aliyun_serverless_connector
 node_modules
 lib
+aliyun_security_group
+aliyun_security_group_ingress
+aliyun_security_group_egress

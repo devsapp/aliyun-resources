@@ -1,0 +1,13 @@
+edition: 3.0.0 
+name: rosApp 
+access: xiliu 
+
+resources:
+  xl-vswitch: 
+    component: ${path("../")}
+    props:
+      vswitch_name : xl-test-vswitch
+      cidr_block: 172.16.0.0/12
+      vpc_id: xxxxxx
+      zone_id: cn-hangzhou-k
+      description: a test vswitch

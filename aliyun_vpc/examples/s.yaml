@@ -1,0 +1,13 @@
+edition: 3.0.0 
+name: rosApp 
+access: xiliu 
+
+resources:
+  xl-vpc: 
+    component: ${path("../")}
+    props:
+      vpc_name: xl-test-vpc
+      cidr_block: 172.16.0.0/12
+      secondary_cidr_blocks:
+        - 172.16.0.0/12
+      description: a test vpc

@@ -46,6 +46,10 @@ class BaseAliyunResource {
     return Object.prototype.toString.call(value) === '[object Array]';
   }
 
+  protected isString(value: any) {
+    return Object.prototype.toString.call(value) === '[object String]';
+  }
+
   protected paramMapping(props: object): object {
     const logger = GLogger.getLogger();
     let paramMap = this.getRosParamMap();
@@ -64,7 +68,12 @@ class BaseAliyunResource {
       } else if (this.isArray(value)) {
         let newV = new Array<object>();
         for (const o of value) {
-          newV.push(this.paramMapping(o));
+          logger.debug(o, Object.prototype.toString.call(o));
+          if (this.isString(o)) {
+            newV.push(o);
+          } else {
+            newV.push(this.paramMapping(o));
+          }
         }
         ret[newKey] = newV;
       } else {

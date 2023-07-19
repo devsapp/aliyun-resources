@@ -1,0 +1,45 @@
+Type: Component
+Name: aliyun_vswitch
+Provider:
+  - 阿里云 # 取值内容参考：www.devsapp.cn/provider_list.html
+Version: dev
+Description: 通过阿里云 ROS 部署阿里云资源
+HomePage: https://github.com/devsapp/aliyun-resources/aliyun-vswitch
+Tags:
+  - ROS
+  - IAC
+Category: 基础云服务 # 取值内容参考：www.devsapp.cn/category_list.html
+Service: # 使用的服务
+  资源编排: # 取值内容参考：www.devsapp.cn/service_list.html
+    Authorities: #权限描述
+      - 资源编排全部权限 # 所需要的权限
+Commands: # 指令，格式为指令：指令描述，例如：
+  deploy: 根据 ROS vswitch 获取对应的参数
+  remove: 空命令
+Properties:
+  vswitch_name:
+    type: string
+    required: true
+    description: 交换机名称
+
+  cidr_block:
+    type: string
+    required: true
+    description: The IPv4 CIDR block of the VSwitch
+    default: 172.16.0.0/12
+
+  vpc_id:
+    type: string
+    required: true
+    description:
+
+  zone_id:
+    type: string
+    required: true
+    description:
+
+  description:
+    type: string
+    required: false
+    description: vpc 描述
+
