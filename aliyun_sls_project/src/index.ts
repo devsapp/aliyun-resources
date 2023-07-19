@@ -2,7 +2,7 @@ import { SLSProject } from './impl/project';
 import { IInputs } from '@serverless-devs/component-interface';
 import { GLogger } from 'base_aliyun_resource';
 
-export default class ComponentOTSInstance {
+export default class ComponentSlsProject {
   protected commands: any;
 
   constructor({ logger }: any) {

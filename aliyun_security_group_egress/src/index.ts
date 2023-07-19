@@ -1,8 +1,8 @@
 import { IInputs } from '@serverless-devs/component-interface';
-import { Vswitch } from './impl/vswitch';
+import { SecurityGroupEgress } from './impl/security_group_egress';
 import { GLogger } from 'base_aliyun_resource';
 
-export default class ComponentVswitch {
+export default class ComponentSecurityGroupEgress {
   protected commands: any;
 
   constructor({ logger }: any) {
@@ -38,8 +38,8 @@ export default class ComponentVswitch {
   public async deploy(inputs: IInputs): Promise<object> {
     GLogger.getLogger().debug(`deploy ==> input: ${JSON.stringify(inputs)}`);
 
-    const vswitch = new Vswitch(inputs);
-    return vswitch.deploy();
+    const sgEgress = new SecurityGroupEgress(inputs);
+    return sgEgress.deploy();
   }
 
   public async remove(inputs: IInputs) {

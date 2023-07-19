@@ -1,0 +1,12 @@
+edition: 3.0.0 
+name: rosApp 
+access: xiliu 
+
+resources:
+  xl-sg: 
+    component: ${path("../")}
+    props:
+      name : xl-test-sg
+      vpc_id: xxxxxx
+      security_group_type: normal
+      description: a test sg

@@ -1,0 +1,16 @@
+edition: 3.0.0 
+name: rosApp 
+access: xiliu 
+
+resources:
+  xl-sg-egress: 
+    component: ${path("../")}
+    props:
+      security_group_id : xxxx
+      ip_protocol: tcp
+      port_range: 80/80
+      cidr_ip: 0.0.0.0/0
+      priority: 1
+      policy: accept
+      nic_type: internet
+      description: a test sg egress
