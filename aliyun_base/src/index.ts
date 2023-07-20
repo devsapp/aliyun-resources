@@ -38,6 +38,17 @@ class BaseAliyunResource {
     };
   }
 
+  protected customRosValueHandle(val: any): any {
+    if (this.isString(val) && val.startsWith('Fn::GetAtt:')) {
+      const r = val.substring('Fn::GetAtt:'.length);
+      const arr = r.split('.');
+      return {
+        'Fn::GetAtt': arr,
+      };
+    }
+    return val;
+  }
+
   protected isObject(value: any) {
     return Object.prototype.toString.call(value) === '[object Object]';
   }
@@ -82,7 +93,7 @@ class BaseAliyunResource {
           logger.debug(`value map ==>  ${value} : ${newV}`);
           ret[newKey] = newV;
         } else {
-          ret[newKey] = value;
+          ret[newKey] = this.customRosValueHandle(value);
         }
       }
     }
@@ -112,7 +123,7 @@ class BaseAliyunResource {
 
 class GLogger {
   private static instance: any;
-  private constructor() {}
+  private constructor() { }
 
   static getLogger(): any {
     if (!GLogger.instance) {

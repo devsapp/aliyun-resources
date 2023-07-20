@@ -1,0 +1,13 @@
+edition: 3.0.0 
+name: rosApp 
+access: xiliu 
+
+resources:
+  xl-nas-mount-target: 
+    component: ${path("../")}
+    props:
+      file_system_id: xxxx
+      access_group_name: DEFAULT_VPC_GROUP_NAME
+      vswitch_id: yyyy
+      status: Active
+      security_group_id: zzzzz

@@ -1,0 +1,76 @@
+Type: Component
+Name: aliyun_nas_file_system
+Provider:
+  - 阿里云 # 取值内容参考：www.devsapp.cn/provider_list.html
+Version: dev
+Description: 通过阿里云 ROS 部署阿里云资源
+HomePage: https://github.com/devsapp/aliyun-resources/aliyun_nas_file_system
+Tags:
+  - ROS
+  - IAC
+Category: 基础云服务 # 取值内容参考：www.devsapp.cn/category_list.html
+Service: # 使用的服务
+  资源编排: # 取值内容参考：www.devsapp.cn/service_list.html
+    Authorities: #权限描述
+      - 资源编排全部权限 # 所需要的权限
+Commands: # 指令，格式为指令：指令描述，例如：
+  deploy: 根据 ROS nas filesystem 获取对应的参数
+  remove: 空命令
+
+Properties:
+  file_system_type:
+    type: string
+    required: false
+    description: 文件系统类型
+    default: standard
+    enum:
+      - standard
+      - extreme
+
+  protocol_type:
+    type: string
+    required: true
+    description: 文件系统协议类型
+    default: NFS
+    enum:
+      - NFS
+      - SMB
+
+  storage_type:
+    type: string
+    required: true
+    description: 存储类型
+    default: Performance
+    enum:
+      - Performance
+      - Capacity
+      - standard
+      - advance
+
+  zone_id:
+    type: string
+    required: true
+    description: 可用区
+
+  encrypt_type:
+    type: number
+    required: true
+    description: 存储类型
+    default: 0
+    enum:
+      - 0
+      - 1
+      - 2
+
+  capacity:
+    type: number
+    required: true
+    description: 文件系统容量，当 file_system_type 取值为extreme时，该参数有效且必须指定
+    default: 100
+
+
+  description:
+    type: string
+    required: false
+    description: 文件系统描述
+    default: private

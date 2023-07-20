@@ -8,12 +8,6 @@ resources:
     props:
       bucket: xl-test-bucket-001
       acl: private
-
-  xl_test_bucket_003:
-    component: aliyun_oss_bucket@dev
-    props:
-      bucket: xl-test-bucket-003
-      acl: private
   
   xl_test_instance_002:
     component: aliyun_ots_instance@dev
@@ -57,6 +51,24 @@ resources:
       enable_web_tracking: false
       append_meta: false
 
+  xl_test_vpc_001:
+    component: aliyun_vpc@dev
+    props:
+      vpc_name: xl_test_vpc_001
+      cidr_block: 192.168.6.0/24
+      description: a test vpc
+
+  xl_test_vswitch_001:
+    component: aliyun_vswitch@dev
+    props:
+      depends_on: 
+        - xl_test_vpc_001
+      vswitch_name : xl_test_vswitch_001
+      cidr_block: 192.168.6.0/25
+      vpc_id: Fn::GetAtt:xl_test_vpc_001.VpcId
+      zone_id: cn-hangzhou-k
+      description: a test vswitch
+
   ros-transformer-test: #  服务名称
     component: ${path("../")}
     props:
@@ -65,8 +77,9 @@ resources:
       endpoint: ros.aliyuncs.com # 海外是 ros-intl.aliyuncs.com， 默认是国内
       refs:
         - ${xl_test_bucket_001.output}
-        - ${xl_test_bucket_003.output}
         - ${xl_test_instance_002.output}
         - ${xl_test_table_001.output}
         - ${xl_test_log_project_001.output}
         - ${xl_test_log_store_001.output}
+        - ${xl_test_vpc_001.output}
+        - ${xl_test_vswitch_001.output}

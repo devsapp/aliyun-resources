@@ -1,0 +1,15 @@
+edition: 3.0.0 
+name: rosApp 
+access: xiliu 
+
+resources:
+  xl-nas-file-system: 
+    component: ${path("../")}
+    props:
+      file_system_type: standard
+      protocol_type: NFS
+      storage_type: Performance
+      zone_id: cn-hangzhou-e
+      encrypt_type: 0
+      capacity: 100
+      description: 'this is a nas desc'
