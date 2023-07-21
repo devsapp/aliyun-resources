@@ -16,4 +16,10 @@ export class Vpc extends BaseAliyunResource {
       Properties: {},
     };
   }
+
+  public async deploy(): Promise<object> {
+    let ret = (await super.deploy()) as any;
+    ret['vpcId'] = JSON.stringify({ 'Fn::GetAtt': [ret.resourceId, 'VpcId'] });
+    return ret;
+  }
 }

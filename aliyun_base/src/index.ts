@@ -39,12 +39,8 @@ class BaseAliyunResource {
   }
 
   protected customRosValueHandle(val: any): any {
-    if (this.isString(val) && val.startsWith('Fn::GetAtt:')) {
-      const r = val.substring('Fn::GetAtt:'.length);
-      const arr = r.split('.');
-      return {
-        'Fn::GetAtt': arr,
-      };
+    if (this.isString(val) && val.includes('Fn::GetAtt')) {
+      return JSON.parse(val);
     }
     return val;
   }

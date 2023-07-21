@@ -65,7 +65,7 @@ resources:
         - xl_test_vpc_001
       vswitch_name : xl_test_vswitch_001
       cidr_block: 192.168.6.0/25
-      vpc_id: Fn::GetAtt:xl_test_vpc_001.VpcId
+      vpc_id: ${xl_test_vpc_001.output.vpcId}
       zone_id: cn-hangzhou-k
       description: a test vswitch
 

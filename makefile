@@ -24,6 +24,9 @@ build-transformer:
 test-transformer: 
 	cd ros_transformer/examples && s deploy && cd - 
 
+publish-transformer: build-transformer
+	cd ros_transformer && npm run build && s registry publish && cd -
+
 statistics:
 	@wget -q https://images.devsapp.cn/tools/git-statistics.sh && bash git-statistics.sh && rm git-statistics.sh
 
