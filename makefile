@@ -18,6 +18,9 @@ publish-all:
 test-all:
 	@./help.sh test
 
+format-all:
+	@./help.sh format
+
 build-transformer:
 	cd ros_transformer && npm run build && cd -
 

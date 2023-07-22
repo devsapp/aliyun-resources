@@ -27,6 +27,13 @@ if [ "$1" = "build" ]; then
   done
 fi
 
+if [ "$1" = "format" ]; then
+  for folder in $folders; do
+      echo "$folder is formating ..."
+      cd $folder && npm run format && cd -
+  done
+fi
+
 if [ "$1" = "test" ]; then
   for folder in $folders; do
     if [ "$folder" != "aliyun_base" ]; then

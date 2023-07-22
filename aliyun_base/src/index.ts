@@ -119,7 +119,7 @@ class BaseAliyunResource {
 
 class GLogger {
   private static instance: any;
-  private constructor() { }
+  private constructor() {}
 
   static getLogger(): any {
     if (!GLogger.instance) {
