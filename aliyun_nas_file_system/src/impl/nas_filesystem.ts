@@ -19,4 +19,10 @@ export class NasFileSystem extends BaseAliyunResource {
       Properties: {},
     };
   }
+
+  public async deploy(): Promise<object> {
+    let ret = (await super.deploy()) as any;
+    ret['fileSystemId'] = JSON.stringify({ 'Fn::GetAtt': [ret.resourceId, 'FileSystemId'] });
+    return ret;
+  }
 }

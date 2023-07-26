@@ -12,8 +12,14 @@ export class SecurityGroup extends BaseAliyunResource {
 
   protected getRosInitTemplateResource(): any {
     return {
-      Type: 'ALIYUN::ECS::VSwitch',
+      Type: 'ALIYUN::ECS::SecurityGroup',
       Properties: {},
     };
+  }
+
+  public async deploy(): Promise<object> {
+    let ret = (await super.deploy()) as any;
+    ret['securityGroupId'] = JSON.stringify({ 'Fn::GetAtt': [ret.resourceId, 'SecurityGroupId'] });
+    return ret;
   }
 }

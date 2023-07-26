@@ -66,6 +66,11 @@ Properties:
       - internet
       - intranet
 
+  source_group_owner_account:
+    type: string
+    required: false
+    description: 当安全组在不同的账户之间进行授权时，目标安全组的阿里云用户账户ID。如果已经设置了cidr_ip，则此参数无效。
+
   description:
     type: string
     required: false

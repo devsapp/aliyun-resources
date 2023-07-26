@@ -45,4 +45,8 @@ export default class ComponentSecurityGroupIngress {
   public async remove(inputs: IInputs) {
     GLogger.getLogger().debug(`remove ==> input: ${JSON.stringify(inputs)}`);
   }
+
+  public async plan(inputs: IInputs) {
+    GLogger.getLogger().debug(`plan ==> input: ${JSON.stringify(inputs)}`);
+  }
 }

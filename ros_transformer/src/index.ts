@@ -68,4 +68,8 @@ export default class ComponentRosTransformer {
     const componentInst: any = await loadComponent(`ros@dev`);
     return await componentInst['remove'](inputs);
   }
+
+  public async plan(inputs: IInputs) {
+    GLogger.getLogger().debug(`plan ==> input: ${JSON.stringify(inputs)}`);
+  }
 }

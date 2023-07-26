@@ -45,4 +45,8 @@ export default class ComponentOTSInstance {
   public async remove(inputs: IInputs) {
     GLogger.getLogger().debug(`remove ==> input: ${JSON.stringify(inputs.props)}`);
   }
+
+  public async plan(inputs: IInputs) {
+    GLogger.getLogger().debug(`plan ==> input: ${JSON.stringify(inputs)}`);
+  }
 }

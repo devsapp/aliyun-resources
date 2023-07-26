@@ -10,6 +10,7 @@ export class SecurityGroupIngress extends BaseAliyunResource {
       priority: 'Priority',
       policy: 'Policy',
       nic_type: 'NicType',
+      source_group_owner_account: 'SourceGroupOwnerId',
       description: 'Description',
     };
   }

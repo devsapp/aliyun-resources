@@ -17,4 +17,10 @@ export class Vswitch extends BaseAliyunResource {
       Properties: {},
     };
   }
+
+  public async deploy(): Promise<object> {
+    let ret = (await super.deploy()) as any;
+    ret['vSwitchId'] = JSON.stringify({ 'Fn::GetAtt': [ret.resourceId, 'VSwitchId'] });
+    return ret;
+  }
 }
