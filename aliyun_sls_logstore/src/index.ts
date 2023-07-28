@@ -49,4 +49,9 @@ export default class ComponentSlsLogStore {
   public async plan(inputs: IInputs) {
     GLogger.getLogger().debug(`plan ==> input: ${JSON.stringify(inputs)}`);
   }
+
+  public async info(inputs: IInputs) {
+    GLogger.getLogger().debug(`info ==> input: ${JSON.stringify(inputs)}`);
+    return inputs.props;
+  }
 }
