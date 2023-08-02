@@ -57,7 +57,7 @@ class BaseAliyunResource {
     return Object.prototype.toString.call(value) === '[object String]';
   }
 
-  protected paramMapping(props: object): object {
+  public paramMapping(props: object): object {
     const logger = GLogger.getLogger();
     let paramMap = this.getRosParamMap();
     let ret = {};

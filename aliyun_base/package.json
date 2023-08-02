@@ -12,7 +12,7 @@
     "watch": "tsc -w",
     "lint": "tslint -p tsconfig.json",
     "format": "prettier --write \"src\"",
-    "prebuild": "rimraf lib && npm run format && rimraf node_modules && npm i",
+    "prebuild": "npm i && rimraf lib && npm run format && rimraf node_modules && npm i",
     "build": "tsc && npm link",
     "prepublishOnly": "npm run test && npm run lint",
     "preversion": "npm run lint",

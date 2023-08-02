@@ -49,3 +49,7 @@ test-sg:
 	@cd ./aliyun_security_group/examples && s deploy && cd - 
 	@cd ./aliyun_security_group_ingress/examples && s deploy && cd - 
 	@cd ./aliyun_security_group_egress/examples && s deploy && cd -
+
+
+ut-test: build-all
+	cd aliyun_oss_bucket && npm run test && cd - 
