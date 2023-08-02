@@ -53,3 +53,4 @@ test-sg:
 
 ut-test: build-all
 	cd aliyun_oss_bucket && npm run test && cd - 
+	cd aliyun_kafka_instance && npm run test && cd - 

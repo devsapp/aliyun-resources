@@ -1,0 +1,25 @@
+edition: 3.0.0 
+name: rosApp 
+access: xiliu 
+
+resources:
+  xl-kafka-instance: 
+    component: ${path("../")}
+    props:
+      paid_type: 'PostPaid'
+      spec_type: 'normal'
+      io_max: 20
+      disk_type: 0
+      disk_size: 900
+      partition_num: 0
+      deploy_type: 5
+      name: 'xl-kaf-inst'
+      zone_id: 'cn-hangzhou-g'
+      vpc_id: 'xxx_vpc_id'
+      vswitch_id: 'xxx_vswitch_id'
+      service_version: '2.2.0'
+      config: 
+        # enable.vpc_sasl_ssl: false
+        # enable.acl: false
+        kafka.log.retention.hours: 72
+        kafka.message.max.bytes: 1
