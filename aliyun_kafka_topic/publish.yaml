@@ -1,0 +1,43 @@
+Type: Component
+Name: aliyun_kafka_topic
+Provider:
+  - 阿里云 # 取值内容参考：www.devsapp.cn/provider_list.html
+Version: dev
+Description: 通过阿里云 ROS 部署阿里云资源
+HomePage: https://github.com/devsapp/aliyun-resources/aliyun_kafka_topic
+Tags:
+  - ROS
+  - IAC
+Category: 基础云服务 # 取值内容参考：www.devsapp.cn/category_list.html
+Service: # 使用的服务
+  资源编排: # 取值内容参考：www.devsapp.cn/service_list.html
+    Authorities: #权限描述
+      - 资源编排全部权限 # 所需要的权限
+Commands: # 指令，格式为指令：指令描述，例如：
+  deploy: 根据 ROS kafka_topic 获取对应的参数
+  remove: 空命令
+Properties:
+  instance_id:
+    type: string
+    required: true
+    description: InstanceId of your Kafka resource, the topic will create in this instance.
+
+  topic:
+    type: string
+    required: true
+    description: Name of the topic. Two topics on a single instance cannot have the same name. The length cannot exceed 64 characters.
+
+  local_topic:
+    type: boolean
+    required: false
+    description: Whether the topic is localTopic or not.
+   
+  partition_num:
+    type: number
+    required: false
+    description: The number of partitions of the topic. The number should between 1 and 48.
+
+  remark:
+    type: string
+    required: true
+    description: This attribute is a concise description of topic. The length cannot exceed 64.
