@@ -14,4 +14,3 @@ resources:
       max_split_shard_count: 12
       enable_web_tracking: false
       append_meta: false
-      
