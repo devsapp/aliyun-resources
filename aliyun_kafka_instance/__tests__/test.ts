@@ -4,28 +4,27 @@ import { GLogger } from 'base_aliyun_resource';
 
 GLogger.setLogger(console);
 
-
 test('test kafka instance', () => {
   const input: IInputs = {
     props: {},
     command: '',
     yaml: {
-      path: ''
+      path: '',
     },
     resource: {
-      name: "",
-      component: "",
-      access: "",
+      name: '',
+      component: '',
+      access: '',
     },
     args: [],
     cwd: '',
     getCredential: () => {
-      return new Promise((resolve, reject) => { });
+      return new Promise((resolve, reject) => {});
     },
   };
   const o = new KafkaInstance(input);
-  expect(o.paramMapping(
-    {
+  expect(
+    o.paramMapping({
       paid_type: 'PostPaid',
       spec_type: 'normal',
       io_max: 20,
@@ -42,10 +41,10 @@ test('test kafka instance', () => {
         'enable.vpc_sasl_ssl': false,
         'enable.acl': false,
         'kafka.log.retention.hours': 72,
-        'kafka.message.max.bytes': 1
-      }
-    }
-  )).toEqual({
+        'kafka.message.max.bytes': 1,
+      },
+    }),
+  ).toEqual({
     PayType: 'Hour',
     SpecType: 'normal',
     IoMax: 20,
@@ -62,7 +61,7 @@ test('test kafka instance', () => {
       'enable.vpc_sasl_ssl': false,
       'enable.acl': false,
       'kafka.log.retention.hours': 72,
-      'kafka.message.max.bytes': 1
-    }
+      'kafka.message.max.bytes': 1,
+    },
   });
 });

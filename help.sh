@@ -51,3 +51,12 @@ if [ "$1" = "publish" ]; then
     fi  
   done
 fi
+
+if [ "$1" = "ut-test" ]; then
+  for folder in $folders; do
+    if [ "$folder" != "aliyun_base" ]; then
+      echo "$folder is test ut ...."
+      cd $folder  && npm run test && cd -
+    fi
+  done
+fi

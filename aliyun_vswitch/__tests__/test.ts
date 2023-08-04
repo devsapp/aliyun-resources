@@ -1,10 +1,10 @@
-import { KafkaTopic } from '../src/impl/kafka_topic';
+import { Vswitch } from '../src/impl/vswitch';
 import { IInputs } from '@serverless-devs/component-interface';
 import { GLogger } from 'base_aliyun_resource';
 
 GLogger.setLogger(console);
 
-test('test kafka topic', () => {
+test('test vswitch', () => {
   const input: IInputs = {
     props: {},
     command: '',
@@ -22,20 +22,20 @@ test('test kafka topic', () => {
       return new Promise((resolve, reject) => {});
     },
   };
-  const o = new KafkaTopic(input);
+  const o = new Vswitch(input);
   expect(
     o.paramMapping({
-      instance_id: 'inst-111',
-      topic: 'xl-topic',
-      local_topic: false,
-      partition_num: 12,
-      remark: 'test remark',
+      vswitch_name: 'xl-test-vswitch',
+      cidr_block: '172.16.0.0/12',
+      vpc_id: 'xxxxxx',
+      zone_id: 'cn-hangzhou-k',
+      description: 'a test vswitch',
     }),
   ).toEqual({
-    InstanceId: 'inst-111',
-    Topic: 'xl-topic',
-    LocalTopic: false,
-    PartitionNum: 12,
-    Remark: 'test remark',
+    VSwitchName: 'xl-test-vswitch',
+    CidrBlock: '172.16.0.0/12',
+    VpcId: 'xxxxxx',
+    ZoneId: 'cn-hangzhou-k',
+    Description: 'a test vswitch',
   });
 });

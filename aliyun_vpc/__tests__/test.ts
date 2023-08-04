@@ -1,10 +1,10 @@
-import { KafkaTopic } from '../src/impl/kafka_topic';
+import { Vpc } from '../src/impl/vpc';
 import { IInputs } from '@serverless-devs/component-interface';
 import { GLogger } from 'base_aliyun_resource';
 
 GLogger.setLogger(console);
 
-test('test kafka topic', () => {
+test('test vpc', () => {
   const input: IInputs = {
     props: {},
     command: '',
@@ -22,20 +22,18 @@ test('test kafka topic', () => {
       return new Promise((resolve, reject) => {});
     },
   };
-  const o = new KafkaTopic(input);
+  const o = new Vpc(input);
   expect(
     o.paramMapping({
-      instance_id: 'inst-111',
-      topic: 'xl-topic',
-      local_topic: false,
-      partition_num: 12,
-      remark: 'test remark',
+      vpc_name: 'xl-test-vpc',
+      cidr_block: '172.16.0.0 / 12',
+      secondary_cidr_blocks: ['172.16.0.0/12'],
+      description: 'a test vpc',
     }),
   ).toEqual({
-    InstanceId: 'inst-111',
-    Topic: 'xl-topic',
-    LocalTopic: false,
-    PartitionNum: 12,
-    Remark: 'test remark',
+    VpcName: 'xl-test-vpc',
+    CidrBlock: '172.16.0.0 / 12',
+    SecondaryCidrBlocks: ['172.16.0.0/12'],
+    Description: 'a test vpc',
   });
 });

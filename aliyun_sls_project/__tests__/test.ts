@@ -1,10 +1,10 @@
-import { KafkaTopic } from '../src/impl/kafka_topic';
+import { SLSProject } from '../src/impl/project';
 import { IInputs } from '@serverless-devs/component-interface';
 import { GLogger } from 'base_aliyun_resource';
 
 GLogger.setLogger(console);
 
-test('test kafka topic', () => {
+test('test sls log project', () => {
   const input: IInputs = {
     props: {},
     command: '',
@@ -22,20 +22,14 @@ test('test kafka topic', () => {
       return new Promise((resolve, reject) => {});
     },
   };
-  const o = new KafkaTopic(input);
+  const o = new SLSProject(input);
   expect(
     o.paramMapping({
-      instance_id: 'inst-111',
-      topic: 'xl-topic',
-      local_topic: false,
-      partition_num: 12,
-      remark: 'test remark',
+      name: 'xl-test-project',
+      description: 'xiliu test log project',
     }),
   ).toEqual({
-    InstanceId: 'inst-111',
-    Topic: 'xl-topic',
-    LocalTopic: false,
-    PartitionNum: 12,
-    Remark: 'test remark',
+    Name: 'xl-test-project',
+    Description: 'xiliu test log project',
   });
 });

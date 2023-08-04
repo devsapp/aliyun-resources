@@ -4,42 +4,40 @@ import { GLogger } from 'base_aliyun_resource';
 
 GLogger.setLogger(console);
 
-
 test('test oss bucket', () => {
   const input: IInputs = {
     props: {},
     command: '',
     yaml: {
-      path: ''
+      path: '',
     },
     resource: {
-      name: "",
-      component: "",
-      access: "",
+      name: '',
+      component: '',
+      access: '',
     },
     args: [],
     cwd: '',
     getCredential: () => {
-      return new Promise((resolve, reject) => { });
+      return new Promise((resolve, reject) => {});
     },
   };
   const o = new OSSBucket(input);
-  expect(o.paramMapping(
-    {
-      bucket: "xl-test-bucket",
-      acl: "private",
-      storage_class: "Standard",
-      redundancy_type: "ZRS",
-      versioning:
-        { status: "Enabled" }
-    }
-  )).toEqual({
-    BucketName: "xl-test-bucket",
-    AccessControl: "private",
-    StorageClass: "Standard",
-    RedundancyType: "ZRS",
+  expect(
+    o.paramMapping({
+      bucket: 'xl-test-bucket',
+      acl: 'private',
+      storage_class: 'Standard',
+      redundancy_type: 'ZRS',
+      versioning: { status: 'Enabled' },
+    }),
+  ).toEqual({
+    BucketName: 'xl-test-bucket',
+    AccessControl: 'private',
+    StorageClass: 'Standard',
+    RedundancyType: 'ZRS',
     VersioningConfiguration: {
-      Status: "Enabled"
-    }
+      Status: 'Enabled',
+    },
   });
 });

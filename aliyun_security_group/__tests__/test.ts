@@ -1,10 +1,10 @@
-import { KafkaTopic } from '../src/impl/kafka_topic';
+import { SecurityGroup } from '../src/impl/security_group';
 import { IInputs } from '@serverless-devs/component-interface';
 import { GLogger } from 'base_aliyun_resource';
 
 GLogger.setLogger(console);
 
-test('test kafka topic', () => {
+test('test sg', () => {
   const input: IInputs = {
     props: {},
     command: '',
@@ -22,20 +22,18 @@ test('test kafka topic', () => {
       return new Promise((resolve, reject) => {});
     },
   };
-  const o = new KafkaTopic(input);
+  const o = new SecurityGroup(input);
   expect(
     o.paramMapping({
-      instance_id: 'inst-111',
-      topic: 'xl-topic',
-      local_topic: false,
-      partition_num: 12,
-      remark: 'test remark',
+      name: 'xl-test-sg',
+      vpc_id: 'xxxxxx',
+      security_group_type: 'normal',
+      description: 'a test sg',
     }),
   ).toEqual({
-    InstanceId: 'inst-111',
-    Topic: 'xl-topic',
-    LocalTopic: false,
-    PartitionNum: 12,
-    Remark: 'test remark',
+    SecurityGroupName: 'xl-test-sg',
+    VpcId: 'xxxxxx',
+    SecurityGroupType: 'normal',
+    Description: 'a test sg',
   });
 });
