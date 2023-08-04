@@ -52,7 +52,7 @@ resources:
 
 比如开发新的阿里云产品 mns topic
 
-1. 可以直接 copy -r aliyun_oss_bucket aliyun_mns_topic
+1. 可以直接 `copy -r aliyun_oss_bucket aliyun_mns_topic`
 2. 将 publish.yaml 相关属性更正为 mns topic， 其中最重要的属性值是 Properties
 
    - 建议直接参考 terraform https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/mns_topic
@@ -70,18 +70,18 @@ resources:
 
 4. 开发调试
 
-在 aliyun_mns_topic 目录， 首先执行
+   在 aliyun_mns_topic 目录， 首先执行
 
-`$ npm run build`
+   `$ npm run build`
 
-如果一直动态调试， 可以开一个终端执行， 保持代码更新之后即时编译， 不需要每次重新执行 npm run build
+   如果一直动态调试， 可以开一个终端执行， 保持代码更新之后即时编译， 不需要每次重新执行 npm run build
 
-`$ npm run watch`
+   `$ npm run watch`
 
-之后在新终端直接进入 example, 将 s.yaml 中属性值改成 publish.yaml 中定义的对应这个云产品的属性值， 直接执行
+   之后在新终端直接进入 example, 将 s.yaml 中属性值改成 publish.yaml 中定义的对应这个云产品的属性值， 直接执行
 
-`$ s deploy`
+   `$ s deploy`
 
-最后修改 `__tests__` 中的测试文件代码， 在 aliyun_mns_topic 目录执行 `npm run test`， test pass
+   最后修改 `__tests__` 中的测试文件代码， 在 aliyun_mns_topic 目录执行 `npm run test`， test pass
 
-**Tips:** 比如可以先进入 aliyun_oss_bucket 目录先完成这个体验
+   **Tips:** 比如可以先进入 aliyun_oss_bucket 目录先完成这个体验

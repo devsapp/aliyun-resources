@@ -21,6 +21,7 @@
   "scripts": {
     "start": "npm run watch",
     "watch": "tsc -w",
+    "test": "jest --config jestconfig.json",
     "format": "prettier --write src/",
     "prebuild": "npm i && rimraf dist && npm run format && rimraf node_modules && npm i && npm link base_aliyun_resource",
     "build": "esbuild src/index.ts --bundle --log-level=error --minify --platform=node --format=cjs --target=node10.4 --outfile=dist/index.js"
@@ -34,6 +35,9 @@
     "prettier": "^2.8.4",
     "rimraf": "^3.0.2",
     "ts-node": "^8.10.2",
-    "typescript": "^4.4.2"
+    "typescript": "^4.4.2",
+    "jest": "^29.6.1",
+    "ts-jest": "^29.1.1",
+    "@types/jest": "^29.5.2"
   }
 }

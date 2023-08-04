@@ -1,5 +1,5 @@
 import { IInputs } from '@serverless-devs/component-interface';
-import { NasMountTarget } from './impl/nas_filesystem';
+import { NasMountTarget } from './impl/nas_mount_target';
 import { GLogger } from 'base_aliyun_resource';
 
 export default class ComponentNasMountTarget {

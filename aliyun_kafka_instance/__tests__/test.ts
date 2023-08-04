@@ -5,7 +5,7 @@ import { GLogger } from 'base_aliyun_resource';
 GLogger.setLogger(console);
 
 
-test('test oss bucket', () => {
+test('test kafka instance', () => {
   const input: IInputs = {
     props: {},
     command: '',
