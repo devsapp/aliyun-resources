@@ -77,7 +77,7 @@ Properties:
   deploy_type:
     type: number
     required: true
-    description: 部署类型
+    description: 部署类型, 4：公网和VPC实例; 5：VPC实例
     default: 5
     enum:
       - 4

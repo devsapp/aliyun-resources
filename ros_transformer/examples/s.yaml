@@ -2,15 +2,18 @@ edition: 3.0.0 #  命令行YAML规范版本，遵循语义化版本（Semantic V
 name: rosApp #  项目名称
 access: xiliu #  秘钥别名
 
+vars:
+  region: cn-hangzhou
+
 resources:
   xl_test_bucket_001:
-    component: aliyun_oss_bucket@dev
+    component: aliyun_oss_bucket@dev.0.1
     props:
       bucket: xl-test-bucket-001
       acl: private
   
   xl_test_instance_002:
-    component: aliyun_ots_instance@dev
+    component: aliyun_ots_instance@dev.0.1
     props:
       name: xl-inst-321
       accessed_by: Any
@@ -18,7 +21,7 @@ resources:
       instance_type: Capacity
 
   xl_test_table_001:
-    component: aliyun_ots_table@dev
+    component: aliyun_ots_table@dev.0.1
     props:
       depends_on: 
         - xl_test_instance_002
@@ -32,13 +35,13 @@ resources:
       deviation_cell_version_in_sec: 86400
 
   xl_test_log_project_001: 
-    component: aliyun_sls_project@dev
+    component: aliyun_sls_project@dev.0.1
     props:
       name: xl-test-project
       description: "xiliu test log project"
 
   xl_test_log_store_001: 
-    component: aliyun_sls_logstore@dev
+    component: aliyun_sls_logstore@dev.0.1
     props:
       depends_on: 
         - xl_test_log_project_001
@@ -52,27 +55,121 @@ resources:
       append_meta: false
 
   xl_test_vpc_001:
-    component: aliyun_vpc@dev
+    component: aliyun_vpc@dev.0.1
     props:
       vpc_name: xl_test_vpc_001
       cidr_block: 192.168.6.0/24
       description: a test vpc
 
   xl_test_vswitch_001:
-    component: aliyun_vswitch@dev
+    component: aliyun_vswitch@dev.0.1
     props:
       depends_on: 
         - xl_test_vpc_001
       vswitch_name : xl_test_vswitch_001
       cidr_block: 192.168.6.0/25
       vpc_id: ${xl_test_vpc_001.output.vpcId}
-      zone_id: cn-hangzhou-k
+      zone_id: ${vars.region}-k
       description: a test vswitch
+
+  xl_test_sg_001:
+    component: aliyun_security_group@dev.0.1
+    props:
+      depends_on: 
+        - xl_test_vpc_001
+      name : xl-test-sg
+      vpc_id: ${xl_test_vpc_001.output.vpcId}
+      security_group_type: normal
+      description: a test sg
+
+
+  xl_test_sg_ingress_001:
+    component: aliyun_security_group_ingress@dev.0.1
+    props:
+      depends_on: 
+        - xl_test_sg_001
+      security_group_id : ${xl_test_sg_001.output.securityGroupId}
+      ip_protocol: tcp
+      port_range: 80/80
+      cidr_ip: 0.0.0.0/0
+      priority: 1
+      policy: accept
+      nic_type: internet
+      description: a test sg ingress
+
+
+  xl_test_sg_egress_001:
+    component: aliyun_security_group_egress@dev.0.1
+    props:
+      depends_on: 
+        - xl_test_sg_001
+      security_group_id : ${xl_test_sg_001.output.securityGroupId}
+      ip_protocol: tcp
+      port_range: 8080/8080
+      cidr_ip: 0.0.0.0/0
+      priority: 1
+      policy: accept
+      nic_type: internet
+      description: a test sg egress
+
+  xl_test_nas_fs_001: 
+    component: aliyun_nas_file_system@dev.0.1
+    props:
+      file_system_type: standard
+      protocol_type: NFS
+      storage_type: Performance
+      encrypt_type: 0
+      capacity: 100
+      description: 'xiliu-test-nas'
+
+  xl_test_nas_mt_001: 
+    component: aliyun_nas_mount_target@dev.0.1
+    props:
+      depends_on: 
+        - xl_test_nas_fs_001
+        - xl_test_vswitch_001
+      file_system_id: ${xl_test_nas_fs_001.output.fileSystemId}
+      access_group_name: DEFAULT_VPC_GROUP_NAME
+      vpc_id: ${xl_test_vpc_001.output.vpcId}
+      vswitch_id: ${xl_test_vswitch_001.output.vSwitchId}
+      status: Active
+      network_type: Vpc
+
+  xl_test_kafka_instance: 
+    component: aliyun_kafka_instance@dev.0.1
+    props:
+      depends_on: 
+        - xl_test_vswitch_001
+      paid_type: 'PostPaid'
+      spec_type: 'normal'
+      io_max: 20
+      disk_type: 0
+      disk_size: 900
+      partition_num: 0
+      deploy_type: 5
+      name: 'xl-kafka-inst'
+      vpc_id: ${xl_test_vpc_001.output.vpcId}
+      vswitch_id: ${xl_test_vswitch_001.output.vSwitchId}
+      service_version: '2.2.0'
+      config: 
+        kafka.log.retention.hours: 72
+        kafka.message.max.bytes: 1048576
+
+  xl_test_kafka_topic: 
+    component: aliyun_kafka_topic@dev.0.1
+    props:
+      depends_on: 
+        - xl_test_kafka_instance
+      instance_id: ${xl_test_kafka_instance.output.instanceId}
+      topic: 'xl-topic'
+      local_topic: false
+      partition_num: 12
+      remark: 'test remark'
 
   ros-transformer-test: #  服务名称
     component: ${path("../")}
     props:
-      region: cn-hangzhou
+      region: ${vars.region}
       name: xl-stack-transformer1
       endpoint: ros.aliyuncs.com # 海外是 ros-intl.aliyuncs.com， 默认是国内
       refs:
@@ -83,3 +180,10 @@ resources:
         - ${xl_test_log_store_001.output}
         - ${xl_test_vpc_001.output}
         - ${xl_test_vswitch_001.output}
+        - ${xl_test_sg_001.output}
+        - ${xl_test_sg_ingress_001.output}
+        - ${xl_test_sg_egress_001.output}
+        - ${xl_test_nas_fs_001.output}
+        - ${xl_test_nas_mt_001.output}
+        - ${xl_test_kafka_instance.output}
+        - ${xl_test_kafka_topic.output}

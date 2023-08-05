@@ -27,15 +27,19 @@ test('test nas mount target', () => {
     o.paramMapping({
       file_system_id: 'xxxx',
       access_group_name: 'DEFAULT_VPC_GROUP_NAME',
+      vpc_id: 'xxxx',
       vswitch_id: 'yyyy',
       status: 'Active',
+      network_type: 'VPC',
       security_group_id: 'zzzzz',
     }),
   ).toEqual({
     FileSystemId: 'xxxx',
     AccessGroupName: 'DEFAULT_VPC_GROUP_NAME',
+    VpcId: 'xxxx',
     VSwitchId: 'yyyy',
     Status: 'Active',
+    NetworkType: 'Vpc',
     SecurityGroupId: 'zzzzz',
   });
 });

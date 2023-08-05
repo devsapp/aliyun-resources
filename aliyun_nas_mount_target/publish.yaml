@@ -32,6 +32,11 @@ Properties:
     required: true
     description: 权限组名称
 
+  vpc_id:
+    type: string
+    required: true
+    description: vpc id
+
   vswitch_id:
     type: string
     required: true
@@ -45,6 +50,14 @@ Properties:
     enum:
       - Active
       - Inactive
+
+  network_type :
+    type: string
+    required: false
+    description: 挂载点网络类型
+    default: VPC
+    enum:
+      - VPC
 
   security_group_id:
     type: string

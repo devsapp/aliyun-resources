@@ -6,8 +6,16 @@ export class NasMountTarget extends BaseAliyunResource {
       file_system_id: 'FileSystemId',
       access_group_name: 'AccessGroupName',
       vswitch_id: 'VSwitchId',
+      vpc_id: 'VpcId',
       status: 'Status',
       security_group_id: 'SecurityGroupId',
+      network_type: 'NetworkType',
+    };
+  }
+
+  protected getRosValueMap(): object {
+    return {
+      VPC: 'Vpc',
     };
   }
 

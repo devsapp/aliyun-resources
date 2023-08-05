@@ -59,13 +59,13 @@ export default class ComponentRosTransformer {
     newInputs.props.template = rosTemplate;
     logger.debug('newInputs ====>', JSON.stringify(newInputs));
 
-    const componentInst: any = await loadComponent('ros@dev');
+    const componentInst: any = await loadComponent('ros@dev.0.1');
     return await componentInst['deploy'](newInputs);
   }
 
   public async remove(inputs: IInputs) {
     GLogger.getLogger().debug(`remove ==> input: ${JSON.stringify(inputs)}`);
-    const componentInst: any = await loadComponent(`ros@dev`);
+    const componentInst: any = await loadComponent(`ros@dev.0.1`);
     return await componentInst['remove'](inputs);
   }
 

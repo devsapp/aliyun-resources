@@ -8,6 +8,8 @@ resources:
     props:
       file_system_id: xxxx
       access_group_name: DEFAULT_VPC_GROUP_NAME
+      vpc_id: xxxx
       vswitch_id: yyyy
       status: Active
+      network_type: VPC
       security_group_id: zzzzz

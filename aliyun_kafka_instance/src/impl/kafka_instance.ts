@@ -56,6 +56,12 @@ export class KafkaInstance extends BaseAliyunResource {
     delete props.ServiceVersion;
     delete props.Config;
 
+    if (props.DeployType == 5) {
+      props.DeployOption.DeployModule = 'vpc';
+    } else {
+      props.DeployOption.DeployModule = 'eip';
+    }
+
     ret['instanceId'] = JSON.stringify({ 'Fn::GetAtt': [ret.resourceId, 'InstanceId'] });
     return ret;
   }
