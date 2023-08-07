@@ -7,13 +7,13 @@ vars:
 
 resources:
   xl_test_bucket_001:
-    component: aliyun_oss_bucket@dev.0.1
+    component: aliyun_oss_bucket@dev
     props:
       bucket: xl-test-bucket-001
       acl: private
   
   xl_test_instance_002:
-    component: aliyun_ots_instance@dev.0.1
+    component: aliyun_ots_instance@dev
     props:
       name: xl-inst-321
       accessed_by: Any
@@ -21,7 +21,7 @@ resources:
       instance_type: Capacity
 
   xl_test_table_001:
-    component: aliyun_ots_table@dev.0.1
+    component: aliyun_ots_table@dev
     props:
       depends_on: 
         - xl_test_instance_002
@@ -35,13 +35,13 @@ resources:
       deviation_cell_version_in_sec: 86400
 
   xl_test_log_project_001: 
-    component: aliyun_sls_project@dev.0.1
+    component: aliyun_sls_project@dev
     props:
       name: xl-test-project
       description: "xiliu test log project"
 
   xl_test_log_store_001: 
-    component: aliyun_sls_logstore@dev.0.1
+    component: aliyun_sls_logstore@dev
     props:
       depends_on: 
         - xl_test_log_project_001
@@ -55,14 +55,14 @@ resources:
       append_meta: false
 
   xl_test_vpc_001:
-    component: aliyun_vpc@dev.0.1
+    component: aliyun_vpc@dev
     props:
       vpc_name: xl_test_vpc_001
       cidr_block: 192.168.6.0/24
       description: a test vpc
 
   xl_test_vswitch_001:
-    component: aliyun_vswitch@dev.0.1
+    component: aliyun_vswitch@dev
     props:
       depends_on: 
         - xl_test_vpc_001
@@ -73,7 +73,7 @@ resources:
       description: a test vswitch
 
   xl_test_sg_001:
-    component: aliyun_security_group@dev.0.1
+    component: aliyun_security_group@dev
     props:
       depends_on: 
         - xl_test_vpc_001
@@ -84,7 +84,7 @@ resources:
 
 
   xl_test_sg_ingress_001:
-    component: aliyun_security_group_ingress@dev.0.1
+    component: aliyun_security_group_ingress@dev
     props:
       depends_on: 
         - xl_test_sg_001
@@ -99,7 +99,7 @@ resources:
 
 
   xl_test_sg_egress_001:
-    component: aliyun_security_group_egress@dev.0.1
+    component: aliyun_security_group_egress@dev
     props:
       depends_on: 
         - xl_test_sg_001
@@ -113,7 +113,7 @@ resources:
       description: a test sg egress
 
   xl_test_nas_fs_001: 
-    component: aliyun_nas_file_system@dev.0.1
+    component: aliyun_nas_file_system@dev
     props:
       file_system_type: standard
       protocol_type: NFS
@@ -123,7 +123,7 @@ resources:
       description: 'xiliu-test-nas'
 
   xl_test_nas_mt_001: 
-    component: aliyun_nas_mount_target@dev.0.1
+    component: aliyun_nas_mount_target@dev
     props:
       depends_on: 
         - xl_test_nas_fs_001
@@ -136,7 +136,7 @@ resources:
       network_type: Vpc
 
   xl_test_kafka_instance: 
-    component: aliyun_kafka_instance@dev.0.1
+    component: aliyun_kafka_instance@dev
     props:
       depends_on: 
         - xl_test_vswitch_001
@@ -156,7 +156,7 @@ resources:
         kafka.message.max.bytes: 1048576
 
   xl_test_kafka_topic: 
-    component: aliyun_kafka_topic@dev.0.1
+    component: aliyun_kafka_topic@dev
     props:
       depends_on: 
         - xl_test_kafka_instance
