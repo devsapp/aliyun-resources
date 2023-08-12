@@ -1,0 +1,11 @@
+edition: 3.0.0 
+name: rosApp 
+access: xiliu 
+
+resources:
+  xl-kafka-topic: 
+    component: ${path("../")}
+    props:
+      instance_id: 'inst-111'
+      consumer_id: 'consumer-111'
+      description: 'test desc'
