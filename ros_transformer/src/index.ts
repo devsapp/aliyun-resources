@@ -7,7 +7,7 @@ export default class ComponentRosTransformer {
   protected commands: any;
 
   constructor({ logger }: any) {
-    GLogger.setLogger(logger);
+    GLogger.setLogger(logger || console);
     this.commands = {
       deploy: {
         help: {
@@ -55,17 +55,20 @@ export default class ComponentRosTransformer {
       logger.debug('item ====>', item);
       rosTemplate.Resources[item.resourceId] = item.resourceTemplate;
     });
-    logger.debug('rosTemplate ====>', JSON.stringify(rosTemplate));
-    newInputs.props.template = rosTemplate;
-    logger.debug('newInputs ====>', JSON.stringify(newInputs));
+    logger.debug('\nrosTemplate ====>', JSON.stringify(rosTemplate));
 
-    const componentInst: any = await loadComponent('ros@dev');
+    newInputs.props.template = rosTemplate;
+
+    logger.debug('\nnewInputs ====>', JSON.stringify(newInputs));
+
+    const componentInst: any = await loadComponent('ros@dev', { logger });
     return await componentInst['deploy'](newInputs);
   }
 
   public async remove(inputs: IInputs) {
-    GLogger.getLogger().debug(`remove ==> input: ${JSON.stringify(inputs)}`);
-    const componentInst: any = await loadComponent(`ros@dev`);
+    const logger = GLogger.getLogger();
+    logger.debug(`remove ==> input: ${JSON.stringify(inputs)}`);
+    const componentInst: any = await loadComponent(`ros@dev`, { logger });
     return await componentInst['remove'](inputs);
   }
 
