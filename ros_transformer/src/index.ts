@@ -48,7 +48,7 @@ export default class ComponentRosTransformer {
     };
     const refs = inputs.props.refs as Array<any>;
     if (refs.length == 0) {
-      logger.info('empty refs, no need create/update ros stack');
+      logger.warn('empty refs, no need create/update ros stack');
       return {};
     }
     refs.forEach((item) => {
@@ -68,6 +68,8 @@ export default class ComponentRosTransformer {
   public async remove(inputs: IInputs) {
     const logger = GLogger.getLogger();
     logger.debug(`remove ==> input: ${JSON.stringify(inputs)}`);
+    _.unset(inputs.props, 'refs');
+    logger.debug(`call ros component input: ${JSON.stringify(inputs.props)}`);
     const componentInst: any = await loadComponent(`ros@dev`, { logger });
     return await componentInst['remove'](inputs);
   }

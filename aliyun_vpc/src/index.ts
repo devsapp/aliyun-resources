@@ -36,22 +36,25 @@ export default class ComponentVpc {
   }
 
   public async deploy(inputs: IInputs): Promise<object> {
-    GLogger.getLogger().debug(`deploy ==> input: ${JSON.stringify(inputs)}`);
-
-    const vpc = new Vpc(inputs);
-    return vpc.deploy();
+    return await this.exec(inputs, 'deploy');
   }
 
   public async remove(inputs: IInputs) {
-    GLogger.getLogger().debug(`remove ==> input: ${JSON.stringify(inputs)}`);
+    return await this.exec(inputs, 'remove');
   }
 
   public async plan(inputs: IInputs) {
-    GLogger.getLogger().debug(`plan ==> input: ${JSON.stringify(inputs)}`);
+    return await this.exec(inputs, 'plan');
   }
 
   public async info(inputs: IInputs) {
-    GLogger.getLogger().debug(`info ==> input: ${JSON.stringify(inputs)}`);
-    return inputs.props;
+    return await this.exec(inputs, 'info');
+  }
+
+  public async exec(inputs: IInputs, command: string) {
+    GLogger.getLogger().debug(`${command} ==> input: ${JSON.stringify(inputs)}`);
+
+    const vpc = new Vpc(inputs);
+    return await vpc.deploy();
   }
 }

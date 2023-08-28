@@ -5,9 +5,9 @@ if [ $# -gt 1 ]; then
     if [ "$1" = "build" ]; then
       cd $2 && npm run build && cd -
     elif [ "$1" = "publish" ]; then
-      cd $2 && npm run build && s registry publish && cd -
+      cd $2 && npm run build && s3 registry publish && cd -
     else
-      cd $2/examples && s deploy && cd -
+      cd $2/examples && s3 deploy && cd -
     fi
     exit 0
 fi
@@ -38,7 +38,7 @@ if [ "$1" = "test" ]; then
   for folder in $folders; do
     if [ "$folder" != "aliyun_base" ]; then
       echo "$folder is testing ..."
-      cd $folder/examples && s deploy && cd -
+      cd $folder/examples && s3 deploy && cd -
     fi
   done
 fi
@@ -47,7 +47,7 @@ if [ "$1" = "publish" ]; then
   for folder in $folders; do
     if [ "$folder" != "aliyun_base" ]; then
       echo "$folder is publishing ..."
-      cd $folder && npm run build && s registry publish && cd -
+      cd $folder && npm run build && s3 registry publish && cd -
     fi  
   done
 fi
