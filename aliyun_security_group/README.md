@@ -50,7 +50,7 @@
           region: ${vars.region}
           name: test
           ref:
-            xl_sg_1: ${xl_sg_1.output.resource}
+            xl_sg_1: ${resources.xl_sg_1.output.resource}
     ```
 
 ### 参数详情

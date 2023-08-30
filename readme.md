@@ -29,7 +29,7 @@ resources:
   app-table:
     component: aliyun_ots_table
     props:
-      instance_name: ${ots-inst1.output.name}
+      instance_name: ${resources.ots-inst1.output.name}
       table_name: app-table
       primary_key:
         - type: String
@@ -41,9 +41,9 @@ resources:
       region: ${vars.region}
       name: test
       ref:
-        xl_bucket1: ${xl_bucket1.output.resource}
-        ots-inst1: ${ots-inst1.output.resource}
-        app-table: ${app-table.output.resource}
+        xl_bucket1: ${resources.xl_bucket1.output.resource}
+        ots-inst1: ${resources.ots-inst1.output.resource}
+        app-table: ${resources.app-table.output.resource}
 ```
 
 更加复杂示例可以参考[s-example.yaml](ros_transformer/examples/s.yaml)

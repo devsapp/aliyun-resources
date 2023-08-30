@@ -76,9 +76,13 @@ export default class ComponentRosTransformer {
 
   public async plan(inputs: IInputs) {
     GLogger.getLogger().debug(`plan ==> input: ${JSON.stringify(inputs)}`);
+    _.unset(inputs.props, 'refs');
+    return inputs.props;
   }
 
   public async info(inputs: IInputs) {
     GLogger.getLogger().debug(`info ==> input: ${JSON.stringify(inputs)}`);
+    _.unset(inputs.props, 'refs');
+    return inputs.props;
   }
 }

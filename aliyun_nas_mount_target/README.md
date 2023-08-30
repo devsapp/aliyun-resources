@@ -52,7 +52,7 @@
           region: ${vars.region}
           name: testing-stack
           ref:
-            xl_nas_mount_target1: ${xl_nas_mount_target.output.resource}
+            xl_nas_mount_target1: ${resources.xl_nas_mount_target.output.resource}
     ```
 
 ### 参数详情

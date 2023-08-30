@@ -72,7 +72,7 @@
           region: ${vars.region}
           name: testing-stack
           ref:
-            xl-kafka-inst1: ${xl-kafka-inst.output.resource}
+            xl-kafka-inst1: ${resources.xl-kafka-inst.output.resource}
     ```
 
 ### 参数详情

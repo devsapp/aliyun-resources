@@ -56,7 +56,7 @@
           region: ${vars.region}
           name: testing-stack
           ref:
-            xl_nas1: ${xl_nas.output.resource}
+            xl_nas1: ${resources.xl_nas.output.resource}
     ```
 
 ### 参数详情

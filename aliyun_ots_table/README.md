@@ -55,7 +55,7 @@
         props:
           depends_on: 
             - xl_test_instance_001
-          instance_name: ${xl_test_instance_001.props.name}
+          instance_name: ${resources.xl_test_instance_001.props.name}
           table_name: app_table
           primary_key:
             - type: String
@@ -70,8 +70,8 @@
           region: ${vars.region}
           name: test
           ref:
-            xl_test_instance_001: ${xl_test_instance_001.output.resource}
-            xl_test_table_001: ${xl_test_table_001.output.resource}
+            xl_test_instance_001: ${resources.xl_test_instance_001.output.resource}
+            xl_test_table_001: ${resources.xl_test_table_001.output.resource}
     ```
 
 ### 参数详情

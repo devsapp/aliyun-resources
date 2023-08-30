@@ -25,7 +25,7 @@ resources:
     props:
       depends_on: 
         - xl_test_instance_002
-      instance_name: ${xl_test_instance_002.props.name}
+      instance_name: ${resources.xl_test_instance_002.props.name}
       table_name: app_table
       primary_key:
         - type: String
@@ -68,7 +68,7 @@ resources:
         - xl_test_vpc_001
       vswitch_name : xl_test_vswitch_001
       cidr_block: 192.168.6.0/25
-      vpc_id: ${xl_test_vpc_001.output.vpcId}
+      vpc_id: ${resources.xl_test_vpc_001.output.vpcId}
       zone_id: ${vars.region}-k
       description: a test vswitch
 
@@ -78,7 +78,7 @@ resources:
       depends_on: 
         - xl_test_vpc_001
       name : xl-test-sg
-      vpc_id: ${xl_test_vpc_001.output.vpcId}
+      vpc_id: ${resources.xl_test_vpc_001.output.vpcId}
       security_group_type: normal
       description: a test sg
 
@@ -88,7 +88,7 @@ resources:
     props:
       depends_on: 
         - xl_test_sg_001
-      security_group_id : ${xl_test_sg_001.output.securityGroupId}
+      security_group_id : ${resources.xl_test_sg_001.output.securityGroupId}
       ip_protocol: tcp
       port_range: 80/80
       cidr_ip: 0.0.0.0/0
@@ -103,7 +103,7 @@ resources:
     props:
       depends_on: 
         - xl_test_sg_001
-      security_group_id : ${xl_test_sg_001.output.securityGroupId}
+      security_group_id : ${resources.xl_test_sg_001.output.securityGroupId}
       ip_protocol: tcp
       port_range: 8080/8080
       cidr_ip: 0.0.0.0/0
@@ -128,10 +128,10 @@ resources:
       depends_on: 
         - xl_test_nas_fs_001
         - xl_test_vswitch_001
-      file_system_id: ${xl_test_nas_fs_001.output.fileSystemId}
+      file_system_id: ${resources.xl_test_nas_fs_001.output.fileSystemId}
       access_group_name: DEFAULT_VPC_GROUP_NAME
-      vpc_id: ${xl_test_vpc_001.output.vpcId}
-      vswitch_id: ${xl_test_vswitch_001.output.vSwitchId}
+      vpc_id: ${resources.xl_test_vpc_001.output.vpcId}
+      vswitch_id: ${resources.xl_test_vswitch_001.output.vSwitchId}
       status: Active
       network_type: Vpc
 
@@ -148,8 +148,8 @@ resources:
       partition_num: 0
       deploy_type: 5
       name: 'xl-kafka-inst'
-      vpc_id: ${xl_test_vpc_001.output.vpcId}
-      vswitch_id: ${xl_test_vswitch_001.output.vSwitchId}
+      vpc_id: ${resources.xl_test_vpc_001.output.vpcId}
+      vswitch_id: ${resources.xl_test_vswitch_001.output.vSwitchId}
       service_version: '2.2.0'
       config: 
         kafka.log.retention.hours: 72
@@ -160,7 +160,7 @@ resources:
     props:
       depends_on: 
         - xl_test_kafka_instance
-      instance_id: ${xl_test_kafka_instance.output.instanceId}
+      instance_id: ${resources.xl_test_kafka_instance.output.instanceId}
       topic: 'xl-topic'
       local_topic: false
       partition_num: 12
@@ -173,17 +173,17 @@ resources:
       name: xl-stack-transformer1
       endpoint: ros.aliyuncs.com # 海外是 ros-intl.aliyuncs.com， 默认是国内
       refs:
-        - ${xl_test_bucket_001.output}
-        - ${xl_test_instance_002.output}
-        - ${xl_test_table_001.output}
-        - ${xl_test_log_project_001.output}
-        - ${xl_test_log_store_001.output}
-        - ${xl_test_vpc_001.output}
-        - ${xl_test_vswitch_001.output}
-        - ${xl_test_sg_001.output}
-        - ${xl_test_sg_ingress_001.output}
-        - ${xl_test_sg_egress_001.output}
-        - ${xl_test_nas_fs_001.output}
-        - ${xl_test_nas_mt_001.output}
-        - ${xl_test_kafka_instance.output}
-        - ${xl_test_kafka_topic.output}
+        - ${resources.xl_test_bucket_001.output}
+        - ${resources.xl_test_instance_002.output}
+        - ${resources.xl_test_table_001.output}
+        - ${resources.xl_test_log_project_001.output}
+        - ${resources.xl_test_log_store_001.output}
+        - ${resources.xl_test_vpc_001.output}
+        - ${resources.xl_test_vswitch_001.output}
+        - ${resources.xl_test_sg_001.output}
+        - ${resources.xl_test_sg_ingress_001.output}
+        - ${resources.xl_test_sg_egress_001.output}
+        - ${resources.xl_test_nas_fs_001.output}
+        - ${resources.xl_test_nas_mt_001.output}
+        - ${resources.xl_test_kafka_instance.output}
+        - ${resources.xl_test_kafka_topic.output}

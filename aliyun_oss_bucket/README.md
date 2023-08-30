@@ -50,7 +50,7 @@
           region: ${vars.region}
           name: test
           ref:
-            xl_bucket1: ${xl_bucket1.output.resource}
+            xl_bucket1: ${resources.xl_bucket1.output.resource}
     ```
 
 ### 参数详情

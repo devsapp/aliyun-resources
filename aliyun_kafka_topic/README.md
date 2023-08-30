@@ -52,7 +52,7 @@
           region: ${vars.region}
           name: testing-stack
           ref:
-            xl-kafka-topic1: ${xl-kafka-topic.output.resource}
+            xl-kafka-topic1: ${resources.xl-kafka-topic.output.resource}
     ```
 
 ### 参数详情

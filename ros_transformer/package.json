@@ -26,8 +26,8 @@
     "build": "esbuild src/index.ts --bundle --log-level=error --minify --platform=node --format=cjs --target=node10.4 --outfile=dist/index.js"
   },
   "dependencies": {
-    "@serverless-devs/component-interface": "^0.0.2",
-    "@serverless-devs/load-component": "^0.0.2-beta.7",
+    "@serverless-devs/component-interface": "^0.0.3-beta.1",
+    "@serverless-devs/load-component": "^0.0.2-beta.14",
     "lodash": "^4.17.21",
     "string-random": "0.1.3",
     "uuid": "^9.0.0"
