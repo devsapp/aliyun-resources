@@ -29,7 +29,7 @@ resources:
   app-table:
     component: aliyun_ots_table
     props:
-      instance_name: ${resources.ots-inst1.output.name}
+      instance_name: ${resources.ots-inst1.props.name}
       table_name: app-table
       primary_key:
         - type: String
