@@ -54,6 +54,23 @@ export default class ComponentRosTransformer {
     refs.forEach((item) => {
       logger.debug('item ====>', item);
       rosTemplate.Resources[item.resourceId] = item.resourceTemplate;
+      if (item.resourceTemplate.Type === 'ALIYUN::KAFKA::Instance') {
+        rosTemplate.Outputs[item.resourceId] = {
+          Value: { 'Fn::GetAtt': [item.resourceId, 'InstanceId'] },
+        };
+      } else if (item.resourceTemplate.Type === 'ALIYUN::ECS::VPC') {
+        rosTemplate.Outputs[item.resourceId] = {
+          Value: { 'Fn::GetAtt': [item.resourceId, 'VpcId'] },
+        };
+      } else if (item.resourceTemplate.Type === 'ALIYUN::ECS::VSwitch') {
+        rosTemplate.Outputs[item.resourceId] = {
+          Value: { 'Fn::GetAtt': [item.resourceId, 'VSwitchId'] },
+        };
+      } else if (item.resourceTemplate.Type === 'ALIYUN::ECS::SecurityGroup') {
+        rosTemplate.Outputs[item.resourceId] = {
+          Value: { 'Fn::GetAtt': [item.resourceId, 'SecurityGroupId'] },
+        };
+      }
     });
     logger.debug('\nrosTemplate ====>', JSON.stringify(rosTemplate));
 
