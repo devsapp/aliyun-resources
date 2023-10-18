@@ -33,6 +33,19 @@ export default class ComponentRosTransformer {
           ],
         },
       },
+      plan: {
+        help: {
+          description: 'Show the differences between the local and remote',
+          summary: 'plan command',
+        },
+        verify: false,
+      },
+      info: {
+        help: {
+          description: 'Query online resource details.',
+          summary: 'info command',
+        },
+      },
     };
   }
 
@@ -54,22 +67,69 @@ export default class ComponentRosTransformer {
     refs.forEach((item) => {
       logger.debug('item ====>', item);
       rosTemplate.Resources[item.resourceId] = item.resourceTemplate;
-      if (item.resourceTemplate.Type === 'ALIYUN::KAFKA::Instance') {
-        rosTemplate.Outputs[item.resourceId] = {
-          Value: { 'Fn::GetAtt': [item.resourceId, 'InstanceId'] },
-        };
-      } else if (item.resourceTemplate.Type === 'ALIYUN::ECS::VPC') {
-        rosTemplate.Outputs[item.resourceId] = {
-          Value: { 'Fn::GetAtt': [item.resourceId, 'VpcId'] },
-        };
-      } else if (item.resourceTemplate.Type === 'ALIYUN::ECS::VSwitch') {
-        rosTemplate.Outputs[item.resourceId] = {
-          Value: { 'Fn::GetAtt': [item.resourceId, 'VSwitchId'] },
-        };
-      } else if (item.resourceTemplate.Type === 'ALIYUN::ECS::SecurityGroup') {
-        rosTemplate.Outputs[item.resourceId] = {
-          Value: { 'Fn::GetAtt': [item.resourceId, 'SecurityGroupId'] },
-        };
+      switch (item.resourceTemplate.Type) {
+        case 'ALIYUN::KAFKA::Instance':
+          rosTemplate.Outputs[item.resourceId] = {
+            Value: { 'Fn::GetAtt': [item.resourceId, 'InstanceId'] },
+            Description: 'Id of the kafka instance.',
+          };
+          break;
+        case 'ALIYUN::ECS::VPC':
+          rosTemplate.Outputs[item.resourceId] = {
+            Value: { 'Fn::GetAtt': [item.resourceId, 'VpcId'] },
+            Description: 'Id of created VPC.',
+          };
+          break;
+        case 'ALIYUN::ECS::VSwitch':
+          rosTemplate.Outputs[item.resourceId] = {
+            Value: { 'Fn::GetAtt': [item.resourceId, 'VSwitchId'] },
+            Description: 'Id of created VSwitch.',
+          };
+          break;
+        case 'ALIYUN::ECS::SecurityGroup':
+          rosTemplate.Outputs[item.resourceId] = {
+            Value: { 'Fn::GetAtt': [item.resourceId, 'SecurityGroupId'] },
+            Description: 'Id of created SecurityGroup.',
+          };
+          break;
+        case 'ALIYUN::OSS::Bucket':
+          rosTemplate.Outputs[item.resourceId] = {
+            Value: { 'Fn::GetAtt': [item.resourceId, 'Name'] },
+            Description: 'The name of Bucket',
+          };
+          break;
+        case 'ALIYUN::OTS::Instance':
+          rosTemplate.Outputs[item.resourceId] = {
+            Value: { 'Fn::GetAtt': [item.resourceId, 'InstanceName'] },
+            Description: 'The name of TableStore instance.',
+          };
+          break;
+        case 'ALIYUN::OTS::Table':
+          rosTemplate.Outputs[item.resourceId] = {
+            Value: { 'Fn::GetAtt': [item.resourceId, 'TableName'] },
+            Description: 'The name of TableStore table.',
+          };
+          break;
+        case 'ALIYUN::SLS::Project':
+          rosTemplate.Outputs[item.resourceId] = {
+            Value: { 'Fn::GetAtt': [item.resourceId, 'Name'] },
+            Description: 'The name of sls log project.',
+          };
+          break;
+        case 'ALIYUN::SLS::Logstore':
+          rosTemplate.Outputs[item.resourceId] = {
+            Value: { 'Fn::GetAtt': [item.resourceId, 'LogstoreName'] },
+            Description: 'The name of sls log store.',
+          };
+          break;
+        case 'ALIYUN::NAS::FileSystem':
+          rosTemplate.Outputs[item.resourceId] = {
+            Value: { 'Fn::GetAtt': [item.resourceId, 'FileSystemId'] },
+            Description: 'The id of the file system created.',
+          };
+          break;
+        default:
+          console.log(`${item.resourceTemplate.Type} is no need output`);
       }
     });
     logger.debug('\nrosTemplate ====>', JSON.stringify(rosTemplate));
@@ -98,8 +158,10 @@ export default class ComponentRosTransformer {
   }
 
   public async info(inputs: IInputs) {
-    GLogger.getLogger().debug(`info ==> input: ${JSON.stringify(inputs)}`);
+    const logger = GLogger.getLogger();
+    logger.debug(`info ==> input: ${JSON.stringify(inputs)}`);
     _.unset(inputs.props, 'refs');
-    return inputs.props;
+    const componentInst: any = await loadComponent('ros@dev', { logger });
+    return await componentInst['info'](inputs);
   }
 }
